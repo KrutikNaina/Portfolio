@@ -16,7 +16,7 @@ const Footer = () => {
       <br/><br/>
       <div className="flex flex-col md:flex-row justify-between items-center border-t border-neutral-700 pt-6">
         <p className="text-white text-base md:text-lg text-center">
-          © 2025 Krutik Naina — Passionate about crafting meaningful digital experiences.
+          © 2025 Krutik Naina. All rights reserved.
         </p>
         <div className="flex gap-6 mt-4 md:mt-0">
           <a
