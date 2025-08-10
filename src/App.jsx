@@ -10,22 +10,7 @@ import Achievements from "./components/Achievements";
 import { Helmet } from 'react-helmet';
 import SEO from "./components/SEO";
 
-const useGATracking = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    if (window.gtag) {
-      window.gtag('config', 'G-Y9YXFD1TLZ', {
-        page_path: location.pathname + location.search,
-      });
-    }
-  }, [location]);
-};
-
-
 const App = () => {
-  useGATracking();
-
   return (
     <>
     <div>
