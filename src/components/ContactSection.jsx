@@ -1,83 +1,71 @@
-import { useEffect, useState } from "react";
-import { Helmet } from 'react-helmet';
+import { motion } from "framer-motion";
+import { Helmet } from "react-helmet";
+import { FaEnvelope, FaLinkedin, FaWhatsapp, FaMapMarkerAlt, FaGithub } from "react-icons/fa";
 
 const ContactSection = () => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  // Floating animation class
-  const floatingClass = isHovered ? "floating motion-safe" : "";
+  const contacts = [
+    {
+      icon: <FaEnvelope size={22} />,
+      title: "Email",
+      value: "krutiknaina29@gmail.com",
+      link: "mailto:krutiknaina29@gmail.com",
+    },
+    {
+      icon: <FaLinkedin size={22} />,
+      title: "LinkedIn",
+      value: "linkedin.com/in/krutiknaina",
+      link: "https://www.linkedin.com/in/krutiknaina",
+    },
+    {
+      icon: <FaGithub size={22} />,
+      title: "Github",
+      value: "github.com/krutiknaina",
+      link: "https://github.com/krutiknaina",
+    },
+    {
+      icon: <FaMapMarkerAlt size={22} />,
+      title: "Location",
+      value: "Rajkot, India",
+      link: "https://maps.app.goo.gl/fgRYxkBWHAE76dnFA",
+    },
+  ];
 
   return (
-    <div className="mt-20 px-4 max-w-5xl mx-auto"><Helmet>
-      <title>Krutik Naina | Full-Stack Developer</title>
-      <meta name="description" content="Portfolio of Krutik Naina, showcasing front-end development projects and skills." />
-      <meta name="keywords" content="Krutik Naina, Front-End Developer, React, Portfolio" />
-      <meta name="robots" content="index, follow" />
-      <meta property="og:title" content="Krutik Naina | Full-Stack Developer" />
-      <meta property="og:description" content="Explore the portfolio of Krutik Naina, a passionate front-end developer." />
-      <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://krutiknaina.com/" />
-      <meta property="og:image" content="https://krutiknaina.com/og-image.jpg" />
-    </Helmet>
-      <h2 id="contact" className="text-3xl sm:text-5xl lg:text-6xl text-center mb-10 scroll-mt-20">
+    <div id="contact" className="mt-20 px-4 max-w-5xl mx-auto scroll-mt-24">
+      <Helmet>
+        <title>Contact | Krutik Naina</title>
+      </Helmet>
+
+      <h2 className="text-3xl sm:text-5xl lg:text-6xl text-center mb-14">
         Contact{" "}
         <span className="bg-gradient-to-r from-[#00ffff] to-[#9900ff] text-transparent bg-clip-text">
           Me
         </span>
       </h2>
 
-      <div className="relative">
-        <form
-          className={`space-y-6 bg-white/5 p-8 rounded-xl border border-white/10 backdrop-blur-md shadow-lg transform transition-all duration-500 ease-in-out ${floatingClass}`}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          <div>
-            <label className="block text-white text-sm mb-2" htmlFor="name">
-              Name
-            </label>
-            <input
-              id="name"
-              type="text"
-              required
-              className="w-full px-4 py-2 rounded bg-white/10 text-white border border-white/20 focus:outline-none focus:border-[#00ffff]"
-              placeholder="Your name"
-            />
-          </div>
-
-          <div>
-            <label className="block text-white text-sm mb-2" htmlFor="email">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              required
-              className="w-full px-4 py-2 rounded bg-white/10 text-white border border-white/20 focus:outline-none focus:border-[#00ffff]"
-              placeholder="your@email.com"
-            />
-          </div>
-
-          <div>
-            <label className="block text-white text-sm mb-2" htmlFor="message">
-              Message
-            </label>
-            <textarea
-              id="message"
-              rows="5"
-              required
-              className="w-full px-4 py-2 rounded bg-white/10 text-white border border-white/20 focus:outline-none focus:border-[#00ffff]"
-              placeholder="Type your message..."
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="bg-gradient-to-r from-[#00ffff] to-[#9900ff] text-white px-6 py-2 rounded hover:opacity-90 transition duration-300"
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {contacts.map((item, index) => (
+          <motion.a
+            href={item.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            key={index}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            whileHover={{
+              scale: 1.06,
+              boxShadow: "0 0 25px #00ffff40",
+            }}
+            className="bg-white/5 border border-white/10 p-6 rounded-xl 
+            backdrop-blur-lg cursor-pointer text-center 
+            hover:bg-white/10 transition-all duration-300"
           >
-            Send Message
-          </button>
-        </form>
+            <div className="text-[#00ffff] mx-auto justify-items-center mb-3">{item.icon}</div>
+            <div className="text-white font-semibold">{item.title}</div>
+            <div className="text-neutral-300 text-sm mt-1">{item.value}</div>
+          </motion.a>
+        ))}
       </div>
     </div>
   );

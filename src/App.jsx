@@ -9,6 +9,7 @@ import EducationSection from "./components/EducationSection";
 import Achievements from "./components/Achievements";
 import { Helmet } from 'react-helmet';
 import SEO from "./components/SEO";
+import AIWidget from "./components/AIWidget";
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
         <EducationSection />
         <Achievements />
         <ContactSection />
+        <AIWidget />
         <Footer />
         <SEO />
       </div>

@@ -59,13 +59,13 @@ const EducationSection = () => {
             >
               {/* Dot on center line */}
               <div
-                className={`absolute top-1/2 w-4 h-4 bg-gradient-to-r from-[#00ffff] to-[#9900ff] rounded-full transform -translate-y-1/2 ${isLeft ? "right-[-34px]" : "left-[-34px]"
+                className={`absolute top-1/2 w-4 h-4 bg-gradient-to-r from-[#00ffff] to-[#9900ff] rounded-full transform -translate-y-1/2 ${isLeft ? "right-[13px]" : "left-[15px]"
                   }`}
               ></div>
 
               {/* Connector line from dot to card */}
               <div
-                className={`absolute top-1/2 h-1 bg-gradient-to-r from-[#00ffff] to-[#9900ff] transform -translate-y-1/2 ${isLeft ? "right-[-34px] w-[34px]" : "left-[-34px] w-[34px]"
+                className={`absolute top-1/2 h-1 bg-gradient-to-r from-[#00ffff] to-[#9900ff] transform -translate-y-1/2 ${isLeft ? "right-[1px] w-[20px]" : "left-[1px] w-[20px]"
                   }`}
               ></div>
 
