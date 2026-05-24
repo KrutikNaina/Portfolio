@@ -25,6 +25,19 @@ const HeroSection = () => {
       <img src="/icons/tailwind.png" alt="Tailwind" className="absolute w-8 sm:w-10 animate-float3 bottom-[30%] left-[15%] opacity-80" />
       <img src="/icons/git.png" alt="Git" className="absolute w-8 sm:w-10 animate-float2 top-[12%] right-[5%] opacity-80" />
       <img src="/icons/python.svg" alt="Python" className="absolute w-10 sm:w-12 animate-float1 top-[20%] left-[45%] opacity-80" />
+      
+      {/* DevOps Premium Logo */}
+      <div className="absolute w-10 h-10 sm:w-12 sm:h-12 animate-float3 bottom-[18%] right-[22%] opacity-80 flex items-center justify-center" title="DevOps">
+        <svg viewBox="0 0 24 24" className="w-full h-full filter drop-shadow-[0_0_8px_rgba(0,255,255,0.4)]" fill="none" stroke="url(#heroDevopsGradient)" strokeWidth="2.5">
+          <defs>
+            <linearGradient id="heroDevopsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#00ffff" />
+              <stop offset="100%" stopColor="#9900ff" />
+            </linearGradient>
+          </defs>
+          <path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 1 0 0-8c-2 0-4 1.33-6 4Z" />
+        </svg>
+      </div>
 
       {/* Hero Content */}
       <h3 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-center leading-tight z-10">

@@ -1,49 +1,46 @@
-import {
-  Github,
-  Linkedin,
-  Mail,
-} from "lucide-react";
-import {
-  resourcesLinks,
-  platformLinks,
-  communityLinks,
-} from "../constants";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer>
-      {/* Bottom Row */}
-      <br/><br/>
-      <div className="flex flex-col md:flex-row justify-between items-center border-t border-neutral-700 pt-6">
-        <p className="text-white text-base md:text-lg text-center">
-          © 2025 Krutik Naina — Passionate about crafting meaningful digital experiences.
+    <footer className="mt-20">
+      {/* Premium Gradient Divider */}
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8" />
+
+      {/* Footer Content */}
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4 py-6">
+        <p className="text-neutral-400 text-sm md:text-base text-center md:text-left font-medium">
+          © 2025 Krutik Naina — Passionate about crafting high-performance digital experiences.
         </p>
-        <div className="flex gap-6 mt-4 md:mt-0">
+
+        {/* Social Links */}
+        <div className="flex gap-4">
           <a
-            href="https://www.linkedin.com/in/krutik-naina"
+            href="https://www.linkedin.com/in/krutiknaina"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-neutral-300 hover:text-[#0077b5] transform hover:scale-110 transition duration-300"
+            className="p-2.5 rounded-full bg-white/5 border border-white/10 text-neutral-300 hover:text-[#00ffff] hover:border-[#00ffff]/30 hover:bg-[#00ffff]/5 hover:scale-110 hover:shadow-[0_0_15px_rgba(0,255,255,0.15)] transition-all duration-300"
+            title="LinkedIn"
           >
-            <Linkedin size={22} />
+            <Linkedin size={20} />
           </a>
           <a
             href="https://github.com/krutiknaina"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-neutral-300 hover:text-white transform hover:scale-110 transition duration-300"
+            className="p-2.5 rounded-full bg-white/5 border border-white/10 text-neutral-300 hover:text-[#9900ff] hover:border-[#9900ff]/30 hover:bg-[#9900ff]/5 hover:scale-110 hover:shadow-[0_0_15px_rgba(153,0,255,0.15)] transition-all duration-300"
+            title="GitHub"
           >
-            <Github size={22} />
+            <Github size={20} />
           </a>
           <a
             href="mailto:krutiknaina29@gmail.com"
-            className="text-neutral-300 hover:text-red-400 transform hover:scale-110 transition duration-300"
+            className="p-2.5 rounded-full bg-white/5 border border-white/10 text-neutral-300 hover:text-[#00ffff] hover:border-[#00ffff]/30 hover:bg-[#00ffff]/5 hover:scale-110 hover:shadow-[0_0_15px_rgba(0,255,255,0.15)] transition-all duration-300"
+            title="Email"
           >
-            <Mail size={22} />
+            <Mail size={20} />
           </a>
         </div>
       </div>
-      <br/>
     </footer>
   );
 };

@@ -1,10 +1,29 @@
 
 export const checklistItems = [
   {
-    description:
-      "I’m currently pursuing a Master’s in Computer Applications with a focus on Full Stack Web Development (including Django, Python, and MERN Stack). I’m passionate about building dynamic, scalable web applications and am actively working on various projects to gain hands-on experience. In addition to my academic journey, I participate in hackathons, certifications, and online courses to stay updated with industry trends. I'm eager to apply my growing skills in real-world environments and open to new opportunities and collaborations in the tech space. Feel free to reach out if you'd like to connect or discuss tech, web development, or innovation!",
+    title: "Full-Stack Development",
+    description: "Architecting end-to-end web applications with MERN (MongoDB, Express, React, Node.js) and Django/Python stacks, prioritizing robust state management and seamless user flows."
   },
-  
+  {
+    title: "Infrastructure & Systems",
+    description: "Designing high-throughput backends and asynchronous architectures using distributed systems like AWS SES, Azure email routing, Redis caching, and BullMQ worker pools."
+  },
+  {
+    title: "MailCraft Platform",
+    description: "Engineered a production-ready transactional & campaign email system featuring robust queue worker architectures, custom domain SPF/DKIM verification, and real-time event analytics."
+  },
+  {
+    title: "AI Integration",
+    description: "Deploying production-ready LLMs and Gemini Pro query engines combined with customized retrieval-augmented generation (RAG) datasets for real-time astrologic and spiritual telemetry."
+  },
+  {
+    title: "Product Building & Operations",
+    description: "Creating real-world SaaS applications with analytical dashboards, transaction tracking, dynamic QR systems, secure JWT authorizations, and telemetry monitoring."
+  },
+  {
+    title: "Continuous Ingestion & Growth",
+    description: "Actively pursuing MCA, logging advanced milestones, contributing to open-source systems, participating in hackathons, and integrating modern technologies into active codebases."
+  }
 ];
 
 

@@ -229,7 +229,7 @@ export default function AIWidget() {
         return (
             <button
                 onClick={() => setOpen(true)}
-                className="fixed bottom-14 right-6 z-[9999] p-4 rounded-full bg-gradient-to-r from-[#00ffff] to-[#9900ff] shadow-[0_0_20px_#00ffff50] border border-white/20 hover:scale-110 transition animate-pulse"
+                className="fixed bottom-1 right-6 z-[9999] p-4 rounded-full bg-gradient-to-r from-[#00ffff] to-[#9900ff] shadow-[0_0_20px_#00ffff50] border border-white/20 hover:scale-110 transition animate-pulse"
             >
                 <Sparkles className="text-black" size={26} />
             </button>
@@ -257,8 +257,8 @@ export default function AIWidget() {
                     <div
                         key={i}
                         className={`max-w-[80%] p-3 rounded-xl text-sm ${m.from === "bot"
-                                ? "bg-white/10 text-white"
-                                : "bg-[#00ffff]/20 text-white ml-auto"
+                            ? "bg-white/10 text-white"
+                            : "bg-[#00ffff]/20 text-white ml-auto"
                             }`}
                     >
                         {m.text}
