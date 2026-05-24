@@ -20,14 +20,14 @@ const HeroSection = () => {
       </Helmet>
 
       {/* Floating Tech Icons */}
-      <img src="/icons/react.png" alt="React" className="absolute w-10 sm:w-12 animate-float1 top-[10%] left-[5%] opacity-80" />
-      <img src="/icons/node.png" alt="Node" className="absolute w-12 sm:w-14 animate-float2 top-[50%] right-[8%] opacity-80" />
-      <img src="/icons/tailwind.png" alt="Tailwind" className="absolute w-8 sm:w-10 animate-float3 bottom-[30%] left-[15%] opacity-80" />
-      <img src="/icons/git.png" alt="Git" className="absolute w-8 sm:w-10 animate-float2 top-[12%] right-[5%] opacity-80" />
-      <img src="/icons/python.svg" alt="Python" className="absolute w-10 sm:w-12 animate-float1 top-[20%] left-[45%] opacity-80" />
+      <img src="/icons/react.png" alt="React" className="absolute w-8 sm:w-12 animate-float1 top-[10%] left-[2%] sm:left-[5%] opacity-60 sm:opacity-80" />
+      <img src="/icons/node.png" alt="Node" className="absolute w-9 sm:w-14 animate-float2 top-[50%] right-[2%] sm:right-[8%] opacity-60 sm:opacity-80" />
+      <img src="/icons/tailwind.png" alt="Tailwind" className="absolute w-7 sm:w-10 animate-float3 bottom-[30%] left-[4%] sm:left-[15%] opacity-60 sm:opacity-80" />
+      <img src="/icons/git.png" alt="Git" className="absolute w-7 sm:w-10 animate-float2 top-[12%] right-[2%] sm:right-[5%] opacity-60 sm:opacity-80" />
+      <img src="/icons/python.svg" alt="Python" className="absolute w-8 sm:w-12 animate-float1 top-[18%] left-[40%] sm:left-[45%] opacity-40 sm:opacity-80" />
       
       {/* DevOps Premium Logo */}
-      <div className="absolute w-10 h-10 sm:w-12 sm:h-12 animate-float3 bottom-[18%] right-[22%] opacity-80 flex items-center justify-center" title="DevOps">
+      <div className="absolute w-8 h-8 sm:w-12 sm:h-12 animate-float3 bottom-[18%] right-[5%] sm:right-[22%] opacity-60 sm:opacity-80 flex items-center justify-center" title="DevOps">
         <svg viewBox="0 0 24 24" className="w-full h-full filter drop-shadow-[0_0_8px_rgba(0,255,255,0.4)]" fill="none" stroke="url(#heroDevopsGradient)" strokeWidth="2.5">
           <defs>
             <linearGradient id="heroDevopsGradient" x1="0%" y1="0%" x2="100%" y2="100%">

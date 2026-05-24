@@ -11,14 +11,19 @@
 
 html {
   scroll-behavior: smooth;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 
 body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  overflow-x: hidden;
   background: linear-gradient(135deg, #050714, #080314);
   background-repeat: no-repeat;
+  background-attachment: fixed;
   background-size: cover;
   color: #e0e0e0;
 }

@@ -14,7 +14,7 @@ import AIWidget from "./components/AIWidget";
 const App = () => {
   return (
     <>
-      <div>
+      <div className="overflow-x-hidden w-full min-h-screen relative">
         <Helmet>
           <title>Krutik Naina | Full-Stack Developer</title>
           <meta name="description" content="Portfolio of Krutik Naina, showcasing front-end development projects and skills." />
@@ -28,7 +28,7 @@ const App = () => {
         </Helmet>
         {/* Page content */}
         <Navbar />
-        <div className="max-w-7xl mx-auto pt-20 px-6">
+        <div className="max-w-7xl mx-auto pt-20 px-4 sm:px-6 md:px-8">
           <HeroSection />
           <Workflow />
           <SkillsSection />
