@@ -1,94 +1,327 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
-  font-family: "Poppins", sans-serif;
-  color-scheme: dark;
-} */
+:root {
+  /* Core Palette Tokens */
+  --case-bg-primary: #07080a;
+  --case-bg-secondary: #0f1115;
+  --case-bg-slate: #181b22;
+  --case-bg-surface: #1f242d;
+  
+  --case-paper: #ebe3d1;
+  --case-paper-dark: #dcd3be;
+  --case-paper-tint: #f7f2ea;
+  
+  --case-text-light: #f3f1ec;
+  --case-text-muted: #a39f95;
+  --case-text-dim: #6b675e;
+  --case-text-dark: #23211c;
+  
+  --case-accent-red: #b91c1c;
+  --case-accent-red-dark: #6b1414;
+  --case-accent-red-bright: #ef4444;
+  
+  --case-accent-cyan: #0891b2;
+  --case-accent-cyan-subtle: rgba(8, 145, 178, 0.15);
+  
+  --case-accent-yellow: #ca8a04;
+  
+  /* Typography Tokens */
+  --font-sans: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+  --font-mono: 'Courier Prime', 'Space Mono', monospace;
+  --font-typewriter: 'Special Elite', 'Courier Prime', monospace;
+  --font-dossier: 'Bebas Neue', Impact, sans-serif;
+  
+  /* Z-Index Layers */
+  --z-background: 0;
+  --z-corkboard: 5;
+  --z-red-strings: 10;
+  --z-pinned-evidence: 15;
+  --z-dossier: 20;
+  --z-stamp-overlay: 25;
+  --z-header: 40;
+  --z-modal: 50;
+  --z-tape-banner: 60;
+}
 
 html {
   scroll-behavior: smooth;
   width: 100%;
   overflow-x: hidden;
+  background-color: #07080a;
+  /* iOS momentum scrolling */
+  -webkit-overflow-scrolling: touch;
 }
-
 
 body {
   margin: 0;
   padding: 0;
   width: 100%;
   overflow-x: hidden;
-  background: linear-gradient(135deg, #050714, #080314);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  color: #e0e0e0;
+  /* Prevent horizontal scroll from any child */
+  max-width: 100vw;
+  background-color: #07080a;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(185, 28, 28, 0.04) 0%, transparent 60%),
+    radial-gradient(circle at 100% 50%, rgba(8, 145, 178, 0.03) 0%, transparent 50%),
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+  background-attachment: scroll;
+  color: #f3f1ec;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* ✨ Custom Animations for Floating Icons */
-.neon-glow {
-  text-shadow: 0 0 5px #00ffff, 0 0 10px #9900ff, 0 0 20px #00ffff;
-}
-
-@keyframes float1 {
-  0%, 100% { transform: translateY(5px); }
-  50% { transform: translateY(-15px); }
-}
-@keyframes float2 {
-  0%, 100% { transform: translateY(5px); }
-  50% { transform: translateY(15px); }
-}
-@keyframes float3 {
-  0%, 100% { transform: translateX(5px); }
-  50% { transform: translateX(-15px); }
-}
-
-.animate-float1 {
-  animation: float1 6s ease-in-out infinite;
-}
-.animate-float2 {
-  animation: float2 6s ease-in-out infinite;
-}
-.animate-float3 {
-  animation: float3 6s ease-in-out infinite;
-}
-
-/* CSS for Floating Motion */
-@keyframes float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0);
+@media (min-width: 769px) {
+  body {
+    background-attachment: fixed;
   }
 }
 
-.floating {
-  animation: float 2s ease-in-out infinite;
+/* Remove tap highlight on mobile for interactive elements */
+a, button, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
-.motion-safe {
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes sparkle {
-  0% {
-    opacity: 1;
-    transform: scale(1) translate(0, 0);
+/* Ensure interactive elements meet 44px minimum touch target on touch devices */
+@media (pointer: coarse) {
+  button, [role="button"] {
+    min-height: 44px;
   }
-  100% {
-    opacity: 0;
-    transform: scale(0.5);
+  /* Nav links and CTAs specifically */
+  header a, footer a, nav a {
+    min-height: 44px;
   }
 }
 
-.animate-sparkle {
-  animation: sparkle 0.8s ease-out forwards;
+/* Exception for inline-text links that should flow naturally */
+p a, li a, span a {
+  min-height: unset;
+  display: inline;
 }
+
+/* Safe area insets for notched devices (iPhone X+) */
+@supports (padding: env(safe-area-inset-bottom)) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Landscape mobile: reduce top spacing on very short screens */
+@media (max-height: 500px) and (orientation: landscape) {
+  section {
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+  }
+}
+
+/* Custom Scrollbar - Crime Archive Style */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #07080a;
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #262b36;
+  border-radius: 2px;
+  border: 1px solid rgba(185, 28, 28, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b91c1c;
+}
+
+/* Selection Color - Crime Highlight */
+::selection {
+  background-color: #7f1d1d;
+  color: #fef2f2;
+}
+
+/* -------------------------------------------------------------
+   VISUAL SURFACES:
+   1. Paper Document (Aged Beige Manila)
+   2. Metal Tactical Plate
+   3. Pinned Evidence Photo
+   4. Tabbed Folder
+   5. Investigation Slate Board
+   6. Transparent Terminal Overlay
+   ------------------------------------------------------------- */
+
+/* 1. Paper Document Surface */
+.surface-paper {
+  background: #ebe3d1;
+  background-image: 
+    radial-gradient(circle at 10% 10%, rgba(200, 180, 150, 0.15), transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(160, 140, 110, 0.2), transparent 50%),
+    repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(140, 120, 90, 0.07) 28px);
+  color: #23211c;
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.3),
+    0 10px 25px -5px rgba(0, 0, 0, 0.7),
+    inset 0 0 40px rgba(180, 160, 120, 0.25);
+  border: 1px solid #d4cbb3;
+  position: relative;
+}
+
+/* 2. Metal Tactical Plate Surface */
+.surface-metal {
+  background: linear-gradient(145deg, #1f232c, #13151b);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.8),
+    0 8px 24px rgba(0, 0, 0, 0.7);
+  position: relative;
+}
+
+/* 3. Pinned Evidence Surface */
+.surface-pinned {
+  background: #14171e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.85);
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s ease;
+}
+
+.surface-pinned:hover {
+  box-shadow: 0 18px 36px -4px rgba(0, 0, 0, 0.95), 0 0 20px rgba(185, 28, 28, 0.15);
+}
+
+/* 4. Tabbed Folder Surface */
+.surface-folder {
+  background: #11141a;
+  border: 1px solid #232834;
+  box-shadow: 
+    0 20px 40px -10px rgba(0, 0, 0, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* 5. Investigation Board Surface */
+.surface-board {
+  background-color: #0c0e12;
+  background-image: 
+    radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 0);
+  background-size: 24px 24px;
+  border: 1px solid #1f242e;
+}
+
+/* 6. Transparent Scanline Overlay */
+.surface-overlay {
+  background: rgba(15, 17, 21, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* -------------------------------------------------------------
+   RUBBER STAMPS & EVIDENCE MARKS
+   ------------------------------------------------------------- */
+.rubber-stamp {
+  display: inline-block;
+  text-transform: uppercase;
+  font-family: var(--font-dossier);
+  letter-spacing: 0.15em;
+  line-height: 1;
+  padding: 0.25rem 0.6rem;
+  border-width: 2.5px;
+  border-style: solid;
+  border-radius: 3px;
+  mask-image: radial-gradient(circle, rgba(0,0,0,1) 70%, rgba(0,0,0,0.7) 100%);
+  user-select: none;
+}
+
+.rubber-stamp-red {
+  color: #dc2626;
+  border-color: #dc2626;
+  text-shadow: 0 0 1px rgba(220, 38, 38, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(220, 38, 38, 0.3), 0 0 0 1px rgba(220, 38, 38, 0.2);
+}
+
+.rubber-stamp-cyan {
+  color: #06b6d4;
+  border-color: #06b6d4;
+  text-shadow: 0 0 1px rgba(6, 182, 212, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(6, 182, 212, 0.3);
+}
+
+.rubber-stamp-amber {
+  color: #d97706;
+  border-color: #d97706;
+  box-shadow: inset 0 0 0 1px rgba(217, 119, 6, 0.3);
+}
+
+/* Paper Clip simulation */
+.paperclip {
+  position: absolute;
+  width: 14px;
+  height: 38px;
+  border: 2.5px solid #8c93a0;
+  border-radius: 8px 8px 0 0;
+  background: transparent;
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.6);
+  z-index: 25;
+  pointer-events: none;
+}
+
+/* Pushpin simulation */
+.pushpin {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ef4444, #7f1d1d);
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.8),
+    inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  z-index: 25;
+  pointer-events: none;
+}
+
+.pushpin::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+  opacity: 0.8;
+}
+
+/* Police Warning Tape Ribbon */
+.police-tape-ribbon {
+  background: repeating-linear-gradient(
+    -45deg,
+    #eab308,
+    #eab308 18px,
+    #18181b 18px,
+    #18181b 36px
+  );
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+/* Subtle CRT Scanlines */
+.scanlines {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+}
+
 

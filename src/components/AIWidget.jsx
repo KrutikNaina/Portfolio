@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import { Sparkles, Send, X, Mic } from "lucide-react";
 
 export default function AIWidget() {
@@ -201,8 +200,15 @@ export default function AIWidget() {
         let response = findLocalAnswer(finalText);
 
         try {
-            const r = await axios.post("/api/ai/reply", { prompt: finalText });
-            response = r?.data?.reply ?? response;
+            const res = await fetch("/api/ai/reply", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ prompt: finalText })
+            });
+            if (res.ok) {
+                const data = await res.json();
+                response = data?.reply ?? response;
+            }
         } catch { }
 
         setTimeout(() => {

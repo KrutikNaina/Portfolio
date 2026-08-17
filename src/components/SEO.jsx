@@ -3,17 +3,17 @@ import { Helmet } from "react-helmet";
 const SEO = () => (
   <Helmet>
     {/* Basic Meta */}
-    <title>Krutik Naina | Web Developer Portfolio</title>
-    <meta name="description" content="Official portfolio of Krutik Naina, web developer with skills in React, HTML, CSS, and JS. Explore projects and contact." />
-    <meta name="keywords" content="Krutik Naina, web developer, frontend developer, portfolio, React developer" />
+    <title>CASE FILE #KN-2025: Krutik Naina | Full-Stack Architect</title>
+    <meta name="description" content="Official case file and developer portfolio of Krutik Naina, showcasing full-stack infrastructure, AI query engines, and cloud systems." />
+    <meta name="keywords" content="Krutik Naina, Full-Stack Developer, React, Node.js, Portfolio, Software Engineer, System Architect" />
     <meta name="author" content="Krutik Naina" />
 
     {/* Open Graph / Social Sharing */}
-    <meta property="og:title" content="Krutik Naina | Web Developer" />
-    <meta property="og:description" content="Explore the portfolio of Krutik Naina. Discover web development projects, skills, and contact information." />
+    <meta property="og:title" content="CASE FILE #KN-2025: Krutik Naina | Full-Stack Architect" />
+    <meta property="og:description" content="Explore the confidential case files, technical architecture, and systems engineered by Krutik Naina." />
     <meta property="og:url" content="https://krutiknaina.com/" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://krutiknaina.com/images/profile.jpg" />
+    <meta property="og:image" content="https://krutiknaina.com/og-image.jpg" />
 
     {/* JSON-LD Structured Data */}
     <script type="application/ld+json">
