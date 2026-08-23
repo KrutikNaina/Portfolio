@@ -2,7 +2,6 @@ import React from "react";
 import mainBg from "../../assets/main-bg.png";
 import lampImg from "../../assets/lamp.png";
 import handcuffsImg from "../../assets/handcuffs.png";
-import policeTapeImg from "../../assets/police-tape.png";
 import fingerprintImg from "../../assets/fingerprint.png";
 import notesCardImg from "../../assets/notes-card.png";
 import collegePhotoImg from "../../assets/college-photo.png";
@@ -155,14 +154,6 @@ const CrimeSceneBackground = ({ children, className = "" }) => {
             decoding="async"
             className="w-full h-auto object-contain transform -rotate-12" 
           />
-        </div>
-
-        {/* 7. POLICE TAPE STRIPS (Top and Bottom Corners) */}
-        <div className="absolute -top-4 sm:-top-6 left-[5%] sm:left-[15%] w-64 sm:w-80 md:w-96 opacity-60 sm:opacity-75 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.9)] transform -rotate-3 pointer-events-none">
-          <img src={policeTapeImg} alt="Crime Scene Police Tape" width="384" height="70" loading="lazy" decoding="async" className="w-full h-auto object-contain" />
-        </div>
-        <div className="absolute -bottom-4 sm:-bottom-6 right-[5%] sm:right-[15%] w-64 sm:w-80 md:w-96 opacity-50 sm:opacity-70 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.9)] transform rotate-2 pointer-events-none">
-          <img src={policeTapeImg} alt="Crime Scene Police Tape" width="384" height="70" loading="lazy" decoding="async" className="w-full h-auto object-contain" />
         </div>
 
       </div>
