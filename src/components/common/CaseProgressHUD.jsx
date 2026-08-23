@@ -17,6 +17,7 @@ const caseSteps = [
 
 const CaseProgressHUD = () => {
   const [activeSection, setActiveSection] = useState("home");
+  const [isExpanded, setIsExpanded] = useState(false);
   const { scrollYProgress } = useScroll();
   const scaleY = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -33,28 +34,26 @@ const CaseProgressHUD = () => {
   }, [scrollYProgress]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sectionElements = caseSteps
-        .map((step) => ({
-          id: step.id,
-          element: document.getElementById(step.id),
-        }))
-        .filter((item) => item.element !== null);
-
-      const scrollPosition = window.scrollY + 250;
-
-      for (let i = sectionElements.length - 1; i >= 0; i--) {
-        const { id, element } = sectionElements[i];
-        if (element.offsetTop <= scrollPosition) {
-          setActiveSection(id);
-          break;
-        }
+    const observerCallback = (entries) => {
+      const visibleEntries = entries.filter((e) => e.isIntersecting);
+      if (visibleEntries.length > 0) {
+        visibleEntries.sort((a, b) => Math.abs(a.boundingClientRect.top) - Math.abs(b.boundingClientRect.top));
+        setActiveSection(visibleEntries[0].target.id);
       }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    const observer = new IntersectionObserver(observerCallback, {
+      root: null,
+      rootMargin: "-15% 0px -60% 0px",
+      threshold: [0, 0.2, 0.5],
+    });
+
+    caseSteps.forEach((step) => {
+      const el = document.getElementById(step.id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   const scrollTo = (id) => {
@@ -64,14 +63,45 @@ const CaseProgressHUD = () => {
     }
   };
 
+  const activeStepObj = caseSteps.find((s) => s.id === activeSection) || caseSteps[0];
+
   return (
     <aside
       aria-label="Investigation Case File Progress"
-      className="hidden xl:flex fixed left-6 2xl:left-8 top-1/2 -translate-y-1/2 z-40 flex-col pointer-events-auto select-none"
+      className="hidden xl:flex fixed left-0 min-[1700px]:left-6 2xl:min-[1700px]:left-8 top-1/2 -translate-y-1/2 z-40 flex-col pointer-events-auto select-none transition-all duration-300"
+      onMouseEnter={() => setIsExpanded(true)}
+      onMouseLeave={() => setIsExpanded(false)}
     >
-      {/* HUD Container */}
-      <div className="relative bg-[#0d0f15]/95 border border-[#2c3242] rounded p-4 shadow-[0_15px_35px_rgba(0,0,0,0.9),0_0_20px_rgba(185,28,28,0.15)] backdrop-blur-md w-56">
-        
+      {/* On Laptop (<1700px): Collapsed Mini Tab when not hovered */}
+      <div
+        className={`min-[1700px]:hidden transition-all duration-300 ${
+          isExpanded ? "hidden" : "flex"
+        }`}
+      >
+        <button
+          type="button"
+          onClick={() => setIsExpanded(true)}
+          className="bg-[#0d0f15]/95 border-y border-r border-[#2c3242] rounded-r p-2.5 flex flex-col items-center gap-2 shadow-[0_15px_30px_rgba(0,0,0,0.9),0_0_15px_rgba(185,28,28,0.2)] backdrop-blur-md group hover:border-case-red/60 transition-colors"
+          title="Open Investigation Case Progress"
+        >
+          <span className="w-2 h-2 rounded-full bg-case-redBright animate-pulse shadow-[0_0_6px_#ef4444]" />
+          <span className="font-mono text-[10px] font-black text-case-redBright group-hover:scale-110 transition-transform">
+            {activeStepObj.code}
+          </span>
+          <div className="w-3.5 h-[1px] bg-white/20" />
+          <Fingerprint size={14} className="text-neutral-400 group-hover:text-case-red transition-colors" />
+          <span className="font-mono text-[8px] font-bold text-neutral-400">
+            {percent}%
+          </span>
+        </button>
+      </div>
+
+      {/* Full Expanded HUD: Always visible on >=1700px, expands on hover on <1700px */}
+      <div
+        className={`relative bg-[#0d0f15]/95 border border-[#2c3242] rounded p-4 shadow-[0_20px_40px_rgba(0,0,0,0.95),0_0_20px_rgba(185,28,28,0.2)] backdrop-blur-md w-56 ${
+          isExpanded ? "flex flex-col" : "hidden min-[1700px]:flex min-[1700px]:flex-col"
+        }`}
+      >
         {/* 4 Corner Screws */}
         <div className="absolute top-1.5 left-1.5 w-1.5 h-1.5 rounded-full bg-[#374151] border border-[#6b7280] shadow-inner" />
         <div className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-[#374151] border border-[#6b7280] shadow-inner" />
@@ -96,7 +126,6 @@ const CaseProgressHUD = () => {
 
         {/* Vertical Stepper with active progress line */}
         <div className="relative space-y-1">
-          
           {/* Background Track Line */}
           <div className="absolute left-[9px] top-2 bottom-2 w-[2px] bg-white/10" />
 
@@ -113,7 +142,10 @@ const CaseProgressHUD = () => {
               <button
                 key={step.id}
                 type="button"
-                onClick={() => scrollTo(step.id)}
+                onClick={() => {
+                  scrollTo(step.id);
+                  setIsExpanded(false);
+                }}
                 className={`relative w-full flex items-center gap-2.5 px-1 py-1 rounded text-left transition-all group ${
                   isActive
                     ? "text-white bg-case-redDark/20"
@@ -164,10 +196,10 @@ const CaseProgressHUD = () => {
           </span>
           <span className="text-emerald-400 font-bold">ONLINE</span>
         </div>
-
       </div>
     </aside>
   );
 };
+
 
 export default CaseProgressHUD;

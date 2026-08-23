@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Github,
@@ -83,8 +84,6 @@ const caseFiles = [
       "Gemini Pro query engine with customized Vedic RAG vector embeddings, stateless JWT authentication, and optimized MongoDB index trees.",
     status: "DEPLOYED // OPERATIONAL",
     statusVariant: "cyan",
-    live: "https://vedai-chat.vercel.app/",
-    live: "https://vedai-chat.vercel.app/",
     live: "https://vedai-chat.vercel.app/",
     date: "Oct 2024 - Present",
     description:
@@ -572,155 +571,164 @@ const ProjectSection = () => {
       </div>
 
       {/* =========================================================================
-          INTERACTIVE EVIDENCE INSPECTOR MODAL
+          INTERACTIVE EVIDENCE INSPECTOR MODAL (Rendered at Root Portal Level)
           ========================================================================= */}
-      <AnimatePresence>
-        {selectedCase && (
-          <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-3 sm:p-4 md:p-6 overflow-y-auto overscroll-contain bg-black/80 backdrop-blur-md">
-            {/* Modal Backdrop Click-to-Close */}
-            <div
-              className="fixed inset-0"
-              onClick={() => setSelectedCase(null)}
-            />
+      {typeof document !== "undefined" &&
+        createPortal(
+          <AnimatePresence>
+            {selectedCase && (
+              <div className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-5 md:p-6">
+                {/* Modal Backdrop Click-to-Close */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="fixed inset-0 bg-black/85 backdrop-blur-sm"
+                  onClick={() => setSelectedCase(null)}
+                />
 
-            {/* Modal Physical Case File Window */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.92, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.92, y: 20 }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
-              className="relative w-full max-w-3xl bg-[#11141d] border-2 border-[#3b4254] rounded-sm p-4 sm:p-6 md:p-8 shadow-[0_25px_60px_rgba(0,0,0,0.95)] z-10 max-h-[92vh] overflow-y-auto overscroll-contain my-auto"
-            >
-              {/* Paperclip in Top-Left Corner */}
-              <div className="absolute -top-3 left-8 w-4 h-12 border-[2.5px] border-[#9ca3af] rounded-full shadow-[2px_3px_5px_rgba(0,0,0,0.8)] z-30 pointer-events-none bg-transparent" />
+                {/* Modal Physical Case File Window */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: 15 }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                  className="relative w-full max-w-2xl bg-[#0e1017] border-2 border-[#3b4254] rounded-sm p-5 sm:p-7 shadow-[0_25px_60px_rgba(0,0,0,0.95)] z-10 max-h-[85vh] overflow-y-auto overscroll-contain my-auto"
+                >
+                  {/* Paperclip in Top-Left Corner */}
+                  <div className="absolute -top-3 left-8 w-4 h-12 border-[2.5px] border-[#9ca3af] rounded-full shadow-[2px_3px_5px_rgba(0,0,0,0.8)] z-30 pointer-events-none bg-transparent" />
 
-              {/* Close Button — min 44×44px touch area */}
-              <button
-                type="button"
-                onClick={() => setSelectedCase(null)}
-                className="absolute top-3 right-3 p-2.5 text-neutral-400 hover:text-white rounded border border-white/10 hover:border-white/30 bg-white/5 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
-                aria-label="Close Case File"
-              >
-                <X size={18} />
-              </button>
+                  {/* Close Button — min 44×44px touch area */}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedCase(null)}
+                    className="absolute top-3 right-3 p-2 text-neutral-400 hover:text-white rounded border border-white/10 hover:border-white/30 bg-white/5 transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
+                    aria-label="Close Case File"
+                  >
+                    <X size={18} />
+                  </button>
 
-              {/* Top Modal Header */}
-              <div className="flex flex-wrap items-center gap-2 mb-4 pb-3 border-b border-white/10">
-                <EvidenceLabel code={selectedCase.exhibitCode} variant="yellow" />
-                <span className="font-mono text-xs text-case-redBright font-bold uppercase">
-                  {selectedCase.caseNumber}
-                </span>
-                <span className="font-mono text-xs text-neutral-400">
-                  // {selectedCase.classification}
-                </span>
-              </div>
-
-              {/* Case Title */}
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-mono font-black text-white mb-2 leading-tight">
-                {selectedCase.name}
-              </h3>
-
-              {/* Case Type & Date */}
-              <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-xs text-neutral-400 mb-6 pb-2 border-b border-white/10">
-                <div>
-                  <span className="text-case-red font-bold">CASE TYPE:</span>{" "}
-                  <span className="text-neutral-200">{selectedCase.caseType}</span>
-                </div>
-                <div className="flex items-center gap-1 text-neutral-400">
-                  <Clock size={12} />
-                  <span>{selectedCase.date}</span>
-                </div>
-              </div>
-
-              {/* Forensic Briefing Alert */}
-              <div className="bg-[#170c0c] border border-case-red/40 p-3.5 rounded mb-6">
-                <div className="font-mono text-[11px] font-bold text-case-redBright uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                  <Flame size={14} />
-                  INVESTIGATOR FORENSIC LOG:
-                </div>
-                <p className="font-mono text-xs text-neutral-300 leading-relaxed">
-                  {selectedCase.forensicBrief}
-                </p>
-              </div>
-
-              {/* Architecture Blueprint Section */}
-              <div className="bg-[#0b0d13] border border-[#2b303c] p-4 rounded mb-6">
-                <div className="font-mono text-xs font-bold text-case-redBright uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
-                  <Server size={14} />
-                  ARCHITECTURE & PIPELINE SPEC:
-                </div>
-                <p className="font-mono text-xs text-neutral-200 leading-relaxed">
-                  {selectedCase.architecture}
-                </p>
-              </div>
-
-              {/* Full Description */}
-              <div className="mb-6">
-                <div className="font-mono text-xs font-bold text-neutral-400 uppercase tracking-widest mb-2">
-                  FULL CASE SPECIFICATION:
-                </div>
-                <p className="text-neutral-300 text-sm leading-relaxed">
-                  {selectedCase.description}
-                </p>
-              </div>
-
-              {/* Tech Stack Full Inventory */}
-              <div className="mb-6">
-                <div className="font-mono text-xs font-bold text-neutral-400 uppercase tracking-widest mb-2.5">
-                  TECHNOLOGY INVENTORY ({selectedCase.technologies.length}):
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {selectedCase.technologies.map((tech, i) => (
-                    <span
-                      key={i}
-                      className="font-mono text-xs text-neutral-200 border border-white/10 px-3 py-1 rounded bg-white/5"
-                    >
-                      {tech}
+                  {/* Top Modal Header */}
+                  <div className="flex flex-wrap items-center gap-2 mb-3 pb-2.5 border-b border-white/10 pr-10">
+                    <EvidenceLabel code={selectedCase.exhibitCode} variant="yellow" />
+                    <span className="font-mono text-xs text-case-redBright font-bold uppercase">
+                      {selectedCase.caseNumber}
                     </span>
-                  ))}
-                </div>
+                    <span className="font-mono text-xs text-neutral-400">
+                      // {selectedCase.classification}
+                    </span>
+                  </div>
+
+                  {/* Case Title */}
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-mono font-black text-white mb-2 leading-tight">
+                    {selectedCase.name}
+                  </h3>
+
+                  {/* Case Type & Date */}
+                  <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-xs text-neutral-400 mb-4 pb-2 border-b border-white/10">
+                    <div>
+                      <span className="text-case-red font-bold">CASE TYPE:</span>{" "}
+                      <span className="text-neutral-200">{selectedCase.caseType}</span>
+                    </div>
+                    <div className="flex items-center gap-1 text-neutral-400">
+                      <Clock size={12} />
+                      <span>{selectedCase.date}</span>
+                    </div>
+                  </div>
+
+                  {/* Forensic Briefing Alert */}
+                  <div className="bg-[#170c0c] border border-case-red/40 p-3 rounded mb-4">
+                    <div className="font-mono text-[11px] font-bold text-case-redBright uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                      <Flame size={14} />
+                      INVESTIGATOR FORENSIC LOG:
+                    </div>
+                    <p className="font-mono text-xs text-neutral-300 leading-relaxed">
+                      {selectedCase.forensicBrief}
+                    </p>
+                  </div>
+
+                  {/* Architecture Blueprint Section */}
+                  <div className="bg-[#0b0d13] border border-[#2b303c] p-3.5 rounded mb-4">
+                    <div className="font-mono text-xs font-bold text-case-redBright uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                      <Server size={14} />
+                      ARCHITECTURE &amp; PIPELINE SPEC:
+                    </div>
+                    <p className="font-mono text-xs text-neutral-200 leading-relaxed">
+                      {selectedCase.architecture}
+                    </p>
+                  </div>
+
+                  {/* Full Description */}
+                  <div className="mb-4">
+                    <div className="font-mono text-xs font-bold text-neutral-400 uppercase tracking-widest mb-1.5">
+                      FULL CASE SPECIFICATION:
+                    </div>
+                    <p className="text-neutral-300 text-xs sm:text-sm leading-relaxed">
+                      {selectedCase.description}
+                    </p>
+                  </div>
+
+                  {/* Tech Stack Full Inventory */}
+                  <div className="mb-4">
+                    <div className="font-mono text-xs font-bold text-neutral-400 uppercase tracking-widest mb-2">
+                      TECHNOLOGY INVENTORY ({selectedCase.technologies.length}):
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {selectedCase.technologies.map((tech, i) => (
+                        <span
+                          key={i}
+                          className="font-mono text-xs text-neutral-200 border border-white/10 px-2.5 py-1 rounded bg-white/5"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Modal Footer Links */}
+                  <div className="pt-3 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <div className="font-mono text-[11px] text-emerald-400 flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                      <span>{selectedCase.status}</span>
+                    </div>
+
+                    <div className="flex items-center gap-3 w-full sm:w-auto">
+                      {selectedCase.github && (
+                        <a
+                          href={selectedCase.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2 rounded border border-white/20 text-white font-mono text-xs font-bold tracking-wider hover:bg-white/10 transition-colors"
+                        >
+                          <Github size={14} />
+                          <span>SOURCE CODE</span>
+                        </a>
+                      )}
+                      {selectedCase.live && (
+                        <a
+                          href={selectedCase.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-2 rounded bg-case-red text-white font-mono text-xs font-bold tracking-wider hover:bg-case-redBright transition-colors shadow-md"
+                        >
+                          <span>LAUNCH TARGET</span>
+                          <ExternalLink size={14} />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+
+                </motion.div>
               </div>
-
-              {/* Modal Footer Links */}
-              <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
-                <div className="font-mono text-[11px] text-emerald-400 flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span>{selectedCase.status}</span>
-                </div>
-
-                <div className="flex items-center gap-3 w-full sm:w-auto">
-                  {selectedCase.github && (
-                    <a
-                      href={selectedCase.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded border border-white/20 text-white font-mono text-xs font-bold tracking-wider hover:bg-white/10 transition-colors"
-                    >
-                      <Github size={14} />
-                      <span>SOURCE CODE</span>
-                    </a>
-                  )}
-                  {selectedCase.live && (
-                    <a
-                      href={selectedCase.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded bg-case-red text-white font-mono text-xs font-bold tracking-wider hover:bg-case-redBright transition-colors shadow-md"
-                    >
-                      <span>LAUNCH TARGET</span>
-                      <ExternalLink size={14} />
-                    </a>
-                  )}
-                </div>
-              </div>
-
-            </motion.div>
-          </div>
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
     </section>
   );
 };
 
 export default ProjectSection;
+
 

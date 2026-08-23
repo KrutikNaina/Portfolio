@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Menu, X, Send, ShieldAlert, Fingerprint } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 
-const Navbar = () => {
+const Navbar = ({ isReady = true }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("HOME");
   const { scrollYProgress } = useScroll();
@@ -23,28 +23,31 @@ const Navbar = () => {
   ];
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sectionElements = navLinks
-        .map((link) => ({
-          label: link.label,
-          element: document.getElementById(link.id),
-        }))
-        .filter((item) => item.element !== null);
-
-      const scrollPosition = window.scrollY + 200;
-
-      for (let i = sectionElements.length - 1; i >= 0; i--) {
-        const { label, element } = sectionElements[i];
-        if (element.offsetTop <= scrollPosition) {
-          setActiveTab(label);
-          break;
+    const observerCallback = (entries) => {
+      // Find the intersecting entry with the highest intersection ratio
+      const visibleEntries = entries.filter((e) => e.isIntersecting);
+      if (visibleEntries.length > 0) {
+        // Sort by how close the top is to viewport top
+        visibleEntries.sort((a, b) => Math.abs(a.boundingClientRect.top) - Math.abs(b.boundingClientRect.top));
+        const matchedLink = navLinks.find((l) => l.id === visibleEntries[0].target.id);
+        if (matchedLink) {
+          setActiveTab(matchedLink.label);
         }
       }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    const observer = new IntersectionObserver(observerCallback, {
+      root: null,
+      rootMargin: "-15% 0px -60% 0px",
+      threshold: [0, 0.2, 0.5],
+    });
+
+    navLinks.forEach((link) => {
+      const el = document.getElementById(link.id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   // Close menu when screen resizes above xl breakpoint
@@ -57,7 +60,12 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-case-black/90 backdrop-blur-md border-b border-white/5 transition-all">
+    <motion.header
+      initial={{ opacity: 0, y: -6 }}
+      animate={isReady ? { opacity: 1, y: 0 } : { opacity: 0, y: -6 }}
+      transition={{ duration: 0.5, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed top-0 left-0 right-0 z-50 w-full bg-case-black/90 backdrop-blur-md border-b border-white/5 transition-all"
+    >
       
       {/* Cinematic Top Laser Scroll Progress Bar */}
       <motion.div
@@ -65,10 +73,22 @@ const Navbar = () => {
         className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-case-red via-case-redBright to-case-yellow shadow-[0_0_12px_#ef4444] z-50 will-change-transform"
       />
 
+
       <div className="max-w-7xl mx-auto flex items-center justify-between py-3 px-4 sm:px-6 lg:px-12">
         
         {/* Left Branding: Stencil "KN" + Name & Title */}
-        <a href="#home" className="flex items-center gap-2 sm:gap-3 group select-none min-w-0">
+        <a
+          href="#home"
+          onClick={(e) => {
+            e.preventDefault();
+            const el = document.getElementById("home");
+            if (el) {
+              el.scrollIntoView({ behavior: "smooth" });
+              window.history.pushState(null, "", "#home");
+            }
+          }}
+          className="flex items-center gap-2 sm:gap-3 group select-none min-w-0"
+        >
           <span className="text-2xl sm:text-3xl md:text-4xl font-dossier font-black tracking-tighter text-case-redBright drop-shadow-[0_0_8px_rgba(239,68,68,0.4)] shrink-0">
             KN
           </span>
@@ -77,7 +97,7 @@ const Navbar = () => {
               KRUTIK NAINA
             </span>
             <span className="text-[9px] sm:text-[10px] sm:text-[11px] font-semibold text-case-red tracking-wider font-mono">
-              FULL-STACK ARCHITECT
+              FULL-STACK DEVELOPER
             </span>
           </div>
         </a>
@@ -90,6 +110,14 @@ const Navbar = () => {
               <a
                 key={link.label}
                 href={link.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  const el = document.getElementById(link.id);
+                  if (el) {
+                    el.scrollIntoView({ behavior: "smooth" });
+                    window.history.pushState(null, "", link.href);
+                  }
+                }}
                 className={`relative py-1 transition-colors uppercase font-medium ${
                   isActive
                     ? "text-case-redBright font-bold"
@@ -116,9 +144,17 @@ const Navbar = () => {
         <div className="hidden xl:flex items-center gap-4">
           <a
             href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              const el = document.getElementById("contact");
+              if (el) {
+                el.scrollIntoView({ behavior: "smooth" });
+                window.history.pushState(null, "", "#contact");
+              }
+            }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded border border-case-red/60 text-case-redBright hover:bg-case-red/10 font-mono text-xs font-bold tracking-widest uppercase transition-all duration-200 shadow-[0_0_12px_rgba(239,68,68,0.15)] group"
           >
-            <span>DISPATCH REPORT</span>
+            <span>LET'S CONNECT</span>
             <Send size={13} className="text-case-red group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </a>
         </div>
@@ -154,7 +190,15 @@ const Navbar = () => {
                 <a
                   key={link.label}
                   href={link.href}
-                  onClick={() => setIsOpen(false)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsOpen(false);
+                    const el = document.getElementById(link.id);
+                    if (el) {
+                      el.scrollIntoView({ behavior: "smooth" });
+                      window.history.pushState(null, "", link.href);
+                    }
+                  }}
                   className={`py-3 px-3 rounded flex items-center justify-between uppercase tracking-wider min-h-[44px] transition-colors ${
                     activeTab === link.label
                       ? "text-case-redBright bg-case-redDark/20 font-bold border-l-2 border-case-redBright"
@@ -172,7 +216,15 @@ const Navbar = () => {
               <div className="py-3 border-t border-white/10 mt-1">
                 <a
                   href="#contact"
-                  onClick={() => setIsOpen(false)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsOpen(false);
+                    const el = document.getElementById("contact");
+                    if (el) {
+                      el.scrollIntoView({ behavior: "smooth" });
+                      window.history.pushState(null, "", "#contact");
+                    }
+                  }}
                   className="flex items-center justify-center gap-2 py-3 px-4 min-h-[44px] rounded border border-case-red/60 text-case-red font-bold uppercase tracking-wider bg-case-redDark/10 hover:bg-case-red/20 active:bg-case-red/30 transition-colors"
                 >
                   <span>DISPATCH REPORT</span>
@@ -183,8 +235,9 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 };
 
 export default Navbar;
+

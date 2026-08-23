@@ -73,13 +73,15 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-@media (min-width: 769px) {
-  body {
-    background-attachment: fixed;
-  }
+/* Section Rendering for High Performance Smooth Scrolling */
+section {
+  scroll-margin-top: 5rem;
 }
+
+
 
 /* Remove tap highlight on mobile for interactive elements */
 a, button, [role="button"] {

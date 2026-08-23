@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import Workflow from "./components/Workflow";
@@ -10,11 +11,16 @@ import Achievements from "./components/Achievements";
 import { Helmet } from "react-helmet";
 import SEO from "./components/SEO";
 import AIWidget from "./components/AIWidget";
-import { CrimeSceneBackground, CaseProgressHUD } from "./components/common";
+import { CrimeSceneBackground, CaseProgressHUD, CaseFileLoader } from "./components/common";
 
 const App = () => {
+  const [isReady, setIsReady] = useState(false);
+
   return (
     <>
+      {/* Dark Cinematic Investigation Preloader */}
+      <CaseFileLoader onComplete={() => setIsReady(true)} />
+
       <Helmet>
         <title>CASE FILE #KN-2025: Krutik Naina | Full-Stack Architect</title>
         <meta
@@ -38,14 +44,14 @@ const App = () => {
 
       <CrimeSceneBackground>
         {/* Navigation Bar with Laser Scroll Progress */}
-        <Navbar />
+        <Navbar isReady={isReady} />
 
         {/* Floating Detective Case Progress HUD (Desktop Only) */}
         <CaseProgressHUD />
 
         {/* Protected Center Content Area */}
         <div className="max-w-6xl mx-auto pt-24 pb-16 px-4 sm:px-6 md:px-8 relative z-20">
-          <HeroSection />
+          <HeroSection isReady={isReady} />
           <Workflow />
           <SkillsSection />
           <ProjectSection />
@@ -62,4 +68,5 @@ const App = () => {
 };
 
 export default App;
+
 

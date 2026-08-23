@@ -10,5 +10,6 @@ export { default as MetalPlate } from "./MetalPlate";
 export { default as RedString } from "./RedString";
 export { default as CrimeSceneBackground } from "./CrimeSceneBackground";
 export { default as CaseProgressHUD } from "./CaseProgressHUD";
+export { default as CaseFileLoader } from "./CaseFileLoader";
 
 

@@ -19,7 +19,7 @@ import {
   Fingerprint as FingerprintIcon,
 } from "lucide-react";
 import { Helmet } from "react-helmet";
-import avatarImg from "/icons/avtar.png";
+import krutikImg from "../assets/krutik.png";
 import fingerprintImg from "../assets/fingerprint.png";
 import StatusStamp from "./common/StatusStamp";
 import EvidenceLabel from "./common/EvidenceLabel";
@@ -253,60 +253,17 @@ const Workflow = () => {
               </span>
             </div>
 
-            {/* Mugshot Photo Frame with Height Ruler */}
-            <div className="relative bg-[#14161b] border-2 border-[#383d48] rounded-sm overflow-hidden flex items-center justify-center aspect-[4/4.8] shadow-inner mb-5">
-              {/* Height Ruler Lines on the Left */}
-              <div className="absolute left-0 top-0 bottom-0 w-12 z-20 flex flex-col justify-between py-6 px-1.5 font-mono text-[9px] text-[#9ca3af] border-r border-[#4b5563]/50 bg-black/40 pointer-events-none">
-                <div className="border-b border-[#4b5563]/50 pb-0.5 flex justify-between">
-                  <span>6'0"</span>
-                </div>
-                <div className="border-b border-[#4b5563]/50 pb-0.5 flex justify-between">
-                  <span>5'8"</span>
-                </div>
-                <div className="border-b border-[#4b5563]/50 pb-0.5 flex justify-between">
-                  <span>5'4"</span>
-                </div>
-                <div className="border-b border-[#4b5563]/50 pb-0.5 flex justify-between">
-                  <span>5'0"</span>
-                </div>
-                <div className="border-b border-[#4b5563]/50 pb-0.5 flex justify-between">
-                  <span>4'8"</span>
-                </div>
-                <div className="border-b border-[#4b5563]/50 pb-0.5 flex justify-between">
-                  <span>4'0"</span>
-                </div>
-              </div>
-
-              {/* Developer Portrait Image */}
+            {/* Mugshot Photo Frame with krutik.png */}
+            <div className="relative bg-[#14161b] border border-[#383d48] rounded-sm overflow-hidden flex items-center justify-center shadow-md mb-5 group">
               <img
-                src={avatarImg}
-                alt="Krutik Naina - Developer Profile Mugshot"
+                src={krutikImg}
+                alt="Krutik Naina - Developer Profile Mugshot Dossier"
                 width="400"
                 height="480"
                 loading="lazy"
                 decoding="async"
-                className="w-full h-full object-cover object-center filter contrast-125 brightness-95 grayscale hover:grayscale-0 transition-all duration-500"
+                className="w-full h-auto object-contain select-none pointer-events-none filter contrast-105 brightness-95 group-hover:contrast-110 transition-all duration-300"
               />
-
-              {/* Corner Evidence Watermark */}
-              <div className="absolute top-3 right-3 z-30 pointer-events-none transform rotate-6">
-                <div className="border-[2px] border-[#dc2626] text-[#dc2626] px-2.5 py-0.5 font-dossier font-bold text-sm tracking-[0.18em] uppercase shadow-sm bg-[#150a0a]/90">
-                  IDENTIFIED
-                </div>
-              </div>
-
-              {/* Black Booking Placard Held in Photo */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[85%] bg-[#121316]/95 border-2 border-[#3b414f] rounded px-3 py-2 text-center shadow-[0_10px_25px_rgba(0,0,0,0.9)] z-20">
-                <div className="font-mono font-black text-xs sm:text-sm tracking-[0.2em] text-white uppercase leading-tight">
-                  KRUTIK NAINA
-                </div>
-                <div className="font-mono text-[9px] sm:text-[10px] tracking-widest text-[#ef4444] font-bold mt-0.5">
-                  SYSTEM ARCHITECT // DEV
-                </div>
-                <div className="font-mono text-[8px] text-neutral-400 tracking-[0.15em] border-t border-white/10 pt-0.5 mt-1">
-                  SERIAL: KN-2025-DEV-006
-                </div>
-              </div>
             </div>
 
             {/* Profile Metadata Table (Name, Alias, Role, Status, Location) */}
